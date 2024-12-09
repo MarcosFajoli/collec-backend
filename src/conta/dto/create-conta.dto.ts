@@ -8,5 +8,5 @@ export class CreateContaDto {
   password: string;
 
   @IsString()
-  name: string;
+  nome: string;
 }

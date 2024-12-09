@@ -18,7 +18,7 @@ model Conta {
   //username           String                @unique
   email              String                @unique
   password           String
-  name               String
+  nome               String
   //tel                String
   createdAt          DateTime              @default(now())
   updatedAt          DateTime              @default(now())

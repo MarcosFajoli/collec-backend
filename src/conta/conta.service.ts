@@ -30,7 +30,6 @@ export class ContaService {
   }
 
   findByEmail(email: string) {
-    console.log(email);
     return this.contaRepository.findByEmail(email);
   }
 

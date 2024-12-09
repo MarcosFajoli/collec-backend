@@ -25,7 +25,6 @@ export class ContaRepository {
   }
 
   async findByEmail(email: string): Promise<ContaEntity> {
-    console.log(email);
     return this.prisma.conta.findUnique({
       where: {
         email: email,
