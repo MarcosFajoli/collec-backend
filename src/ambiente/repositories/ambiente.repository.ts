@@ -14,4 +14,12 @@ export class AmbienteRepository {
       },
     });
   }
+
+  async findOne(id: number): Promise<AmbienteEntity> {
+    return this.prisma.ambiente.findUnique({
+      where: {
+        id,
+      },
+    });
+  }
 }

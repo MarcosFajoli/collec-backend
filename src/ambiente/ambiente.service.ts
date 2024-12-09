@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AmbienteRepository } from './repositories/ambiente.repository';
 import { ListaAmbienteRepository } from './repositories/lista-ambiente.repository';
+import { AmbienteEntity } from './entities/ambiente.entity';
 
 @Injectable()
 export class AmbienteService {
@@ -20,5 +21,28 @@ export class AmbienteService {
       ambiente: novoAmbiente,
       lista: novoAmbienteLista,
     };
+  }
+
+  async findOne(id: number): Promise<AmbienteEntity> {
+    return this.ambienteRepository.findOne(id);
+  }
+
+  async addContaInList(ambienteId: number, contaId: number) {
+    return this.listaAmbienteRepository.addContaInList(ambienteId, contaId);
+  }
+
+  async findAllInList(ambienteId: number) {
+    return this.listaAmbienteRepository.findAllInList(ambienteId);
+  }
+
+  async existsInList(contaId: number, ambienteId: number) {
+    const ambientesEncontrados =
+      await this.listaAmbienteRepository.findListsInConta(contaId);
+
+    const encontrado = ambientesEncontrados.some(
+      ambiente => ambiente.ambienteId === ambienteId,
+    );
+
+    return encontrado;
   }
 }
