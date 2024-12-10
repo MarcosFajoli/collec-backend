@@ -57,4 +57,22 @@ export class AmbienteController {
 
     return this.ambienteService.findAllInList(ambienteId);
   }
+
+  @UseGuards(AuthGuard)
+  @Get('conta/:ambienteId')
+  async IsContaInList(@Param('ambienteId') ambienteId: number, @Request() req) {
+    const requestContaId = req.conta.id;
+    const ambienteSolicitado = await this.ambienteService.findOne(ambienteId);
+
+    if (ambienteSolicitado == undefined) {
+      throw new UnauthorizedException();
+    }
+
+    const isAllowed = await this.ambienteService.existsInList(
+      requestContaId,
+      ambienteId,
+    );
+
+    return isAllowed;
+  }
 }
