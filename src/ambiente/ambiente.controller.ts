@@ -5,12 +5,12 @@ import {
   Param,
   Post,
   Request,
-  UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { CreateAmbienteDto } from './dto/create-ambiente.dto';
 import { AmbienteService } from './ambiente.service';
+import { AmbienteGuard } from './ambiente.guard';
 
 @Controller('ambiente')
 export class AmbienteController {
@@ -23,51 +23,22 @@ export class AmbienteController {
     return this.ambienteService.createAmbiente(createAmbienteDto.nome, contaId);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, AmbienteGuard)
   @Post('addConta')
-  async addContaInList(@Body() { contaId, ambienteId }, @Request() req) {
-    const requestContaId = req.conta.id;
-    const ambienteSolicitado = await this.ambienteService.findOne(ambienteId);
-
-    if (requestContaId != ambienteSolicitado?.contaId) {
-      throw new UnauthorizedException();
-    }
-
+  async addContaInList(@Body() { contaId, ambienteId }) {
     return this.ambienteService.addContaInList(ambienteId, contaId);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, AmbienteGuard)
   @Get('list/:ambienteId')
-  async findAllInList(@Param('ambienteId') ambienteId: number, @Request() req) {
-    const requestContaId = req.conta.id;
-    const ambienteSolicitado = await this.ambienteService.findOne(ambienteId);
-
-    if (ambienteSolicitado == undefined) {
-      throw new UnauthorizedException();
-    }
-
-    const isAllowed = await this.ambienteService.existsInList(
-      requestContaId,
-      ambienteId,
-    );
-
-    if (!isAllowed) {
-      throw new UnauthorizedException();
-    }
-
+  async findAllInList(@Param('ambienteId') ambienteId: number) {
     return this.ambienteService.findAllInList(ambienteId);
   }
 
-  @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard, AmbienteGuard)
   @Get('conta/:ambienteId')
   async IsContaInList(@Param('ambienteId') ambienteId: number, @Request() req) {
     const requestContaId = req.conta.id;
-    const ambienteSolicitado = await this.ambienteService.findOne(ambienteId);
-
-    if (ambienteSolicitado == undefined) {
-      throw new UnauthorizedException();
-    }
-
     const isAllowed = await this.ambienteService.existsInList(
       requestContaId,
       ambienteId,

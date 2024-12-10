@@ -53,7 +53,7 @@ model ListaContasAmbiente {
 
 model Estilo {
   id        Int     @id @default(autoincrement())
-  nome      String
+  nome      String  @unique
   descricao String
   Livro     Livro[]
 
@@ -61,27 +61,35 @@ model Estilo {
 }
 
 model Categoria {
-  id        Int     @id @default(autoincrement())
-  nome      String
+  id        Int              @id @default(autoincrement())
+  nome      String           @unique
   descricao String
-  Livro     Livro[]
+  Livros    LivroCategoria[]
 
   @@map("categoria")
 }
 
 model Livro {
-  id          Int      @id @default(autoincrement())
-  nome        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @default(now())
-  estiloId    Int
-  categoriaId Int
-
-  estilo        Estilo          @relation(fields: [estiloId], references: [id])
-  categoria     Categoria       @relation(fields: [categoriaId], references: [id])
+  id            Int              @id @default(autoincrement())
+  nome          String
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now())
+  estiloId      Int
+  estilo        Estilo           @relation(fields: [estiloId], references: [id])
+  Categorias    LivroCategoria[]
   LivrosColecao LivrosColecao[]
 
   @@map("livro")
+}
+
+model LivroCategoria {
+  livroId     Int
+  categoriaId Int
+  livro       Livro     @relation(fields: [livroId], references: [id], onDelete: Cascade)
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+
+  @@id([livroId, categoriaId])
+  @@map("livro_categoria")
 }
 
 model Colecao {

@@ -4,6 +4,7 @@ import { AmbienteService } from './ambiente.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AmbienteRepository } from './repositories/ambiente.repository';
 import { ListaAmbienteRepository } from './repositories/lista-ambiente.repository';
+import { AmbienteGuard } from './ambiente.guard';
 
 @Module({
   controllers: [AmbienteController],
@@ -12,6 +13,7 @@ import { ListaAmbienteRepository } from './repositories/lista-ambiente.repositor
     PrismaService,
     AmbienteRepository,
     ListaAmbienteRepository,
+    AmbienteGuard,
   ],
   exports: [],
 })

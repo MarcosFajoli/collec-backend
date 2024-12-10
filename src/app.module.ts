@@ -4,9 +4,10 @@ import { AppService } from './app.service';
 import { ContaModule } from './conta/conta.module';
 import { AuthModule } from './auth/auth.module';
 import { AmbienteModule } from './ambiente/ambiente.module';
+import { LivroModule } from './livro/livro.module';
 
 @Module({
-  imports: [ContaModule, AuthModule, AmbienteModule],
+  imports: [ContaModule, AuthModule, AmbienteModule, LivroModule],
   controllers: [AppController],
   providers: [AppService],
 })
