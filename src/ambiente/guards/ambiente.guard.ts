@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { AmbienteService } from '../ambiente/ambiente.service';
+import { AmbienteService } from '../ambiente.service';
 
 @Injectable()
 export class AmbienteGuard implements CanActivate {

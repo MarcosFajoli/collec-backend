@@ -36,7 +36,7 @@ model Ambiente {
   createdBy Conta                 @relation(fields: [contaId], references: [id])
   contaId   Int
   userList  ListaContasAmbiente[]
-  Livro     Livro[]
+  Livros    Livro[]
 
   @@map("ambiente")
 }
@@ -56,7 +56,7 @@ model Estilo {
   id        Int     @id @default(autoincrement())
   nome      String  @unique
   descricao String
-  Livro     Livro[]
+  Livros    Livro[]
 
   @@map("estilo")
 }

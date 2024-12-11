@@ -7,10 +7,10 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { CreateAmbienteDto } from './dto/create-ambiente.dto';
 import { AmbienteService } from './ambiente.service';
-import { AmbienteGuard } from './ambiente.guard';
+import { AmbienteGuard } from './guards/ambiente.guard';
 
 @Controller('ambiente')
 export class AmbienteController {
