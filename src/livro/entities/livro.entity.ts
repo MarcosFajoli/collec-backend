@@ -6,4 +6,5 @@ export class LivroEntity implements Livro {
   createdAt: Date;
   updatedAt: Date;
   estiloId: number;
+  ambienteId: number;
 }

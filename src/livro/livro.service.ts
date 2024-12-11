@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLivroDto } from './dto/create-livro.dto';
 import { UpdateLivroDto } from './dto/update-livro.dto';
+import { LivroRepository } from './repositories/livro.repository';
 
 @Injectable()
 export class LivroService {
+  constructor(private livroRepository: LivroRepository) {}
+
   create(createLivroDto: CreateLivroDto) {
-    return 'This action adds a new livro';
+    return this.livroRepository.create(createLivroDto);
   }
 
   findAll() {
