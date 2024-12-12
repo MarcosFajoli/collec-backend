@@ -56,4 +56,16 @@ export class LivroRepository {
 
     return livro;
   }
+
+  async findOne(id: number) {
+    return this.prisma.livro.findUnique({ where: { id } });
+  }
+
+  remove(id: number) {
+    return this.prisma.livro.delete({
+      where: {
+        id,
+      },
+    });
+  }
 }

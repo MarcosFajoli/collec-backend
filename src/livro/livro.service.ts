@@ -15,8 +15,8 @@ export class LivroService {
     return `This action returns all livro`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} livro`;
+  async findOne(id: number) {
+    return this.livroRepository.findOne(id);
   }
 
   update(id: number, updateLivroDto: UpdateLivroDto) {
@@ -24,6 +24,6 @@ export class LivroService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} livro`;
+    return this.livroRepository.remove(id);
   }
 }

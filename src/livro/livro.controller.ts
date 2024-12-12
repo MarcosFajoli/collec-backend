@@ -32,19 +32,19 @@ export class LivroController {
 
   @UseGuards(AuthGuard, AmbienteGuard)
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.livroService.findOne(+id);
+  findOne(@Param('id') id: number) {
+    return this.livroService.findOne(id);
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLivroDto: UpdateLivroDto) {
-    return this.livroService.update(+id, updateLivroDto);
+  update(@Param('id') id: number, @Body() updateLivroDto: UpdateLivroDto) {
+    return this.livroService.update(id, updateLivroDto);
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.livroService.remove(+id);
+  @Delete('/:ambienteId/:id')
+  remove(@Param('id') id: number) {
+    return this.livroService.remove(id);
   }
 }
