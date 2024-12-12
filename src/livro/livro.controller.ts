@@ -31,7 +31,7 @@ export class LivroController {
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
-  @Get(':id')
+  @Get('/:ambienteId/:id')
   findOne(@Param('id') id: number) {
     return this.livroService.findOne(id);
   }

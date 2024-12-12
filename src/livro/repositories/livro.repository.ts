@@ -52,13 +52,29 @@ export class LivroRepository {
           })),
         },
       },
+      include: {
+        Categorias: {
+          select: {
+            categoria: true,
+          },
+        },
+      },
     });
 
     return livro;
   }
 
   async findOne(id: number) {
-    return this.prisma.livro.findUnique({ where: { id } });
+    return this.prisma.livro.findUnique({
+      where: { id },
+      include: {
+        Categorias: {
+          select: {
+            categoria: true,
+          },
+        },
+      },
+    });
   }
 
   remove(id: number) {
