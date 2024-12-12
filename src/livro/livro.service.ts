@@ -11,8 +11,8 @@ export class LivroService {
     return this.livroRepository.create(createLivroDto);
   }
 
-  findAll() {
-    return `This action returns all livro`;
+  findAll(ambienteId: number) {
+    return this.livroRepository.findAll(ambienteId);
   }
 
   async findOne(id: number) {
@@ -20,7 +20,7 @@ export class LivroService {
   }
 
   update(id: number, updateLivroDto: UpdateLivroDto) {
-    return `This action updates a #${id} livro`;
+    return this.livroRepository.update(id, updateLivroDto);
   }
 
   remove(id: number) {

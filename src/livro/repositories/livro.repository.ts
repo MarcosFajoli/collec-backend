@@ -2,6 +2,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateLivroDto } from '../dto/create-livro.dto';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { AmbienteService } from 'src/ambiente/ambiente.service';
+import { UpdateLivroDto } from '../dto/update-livro.dto';
 
 @Injectable()
 export class LivroRepository {
@@ -75,6 +76,68 @@ export class LivroRepository {
         },
       },
     });
+  }
+
+  async findAll(ambienteId: number) {
+    return this.prisma.livro.findMany({
+      where: {
+        ambienteId,
+      },
+      include: {
+        Categorias: {
+          select: {
+            categoria: true,
+          },
+        },
+      },
+    });
+  }
+
+  async update(id: number, updateLivroDto: UpdateLivroDto) {
+    const estilo = await this.prisma.estilo.upsert({
+      where: { nome: updateLivroDto.estiloNome },
+      update: {},
+      create: {
+        nome: updateLivroDto.estiloNome,
+        descricao: `Descrição para ${updateLivroDto.estiloNome}`,
+      },
+    });
+
+    const categoriasCriadas = await Promise.all(
+      updateLivroDto.categorias.map(categoriaNome =>
+        this.prisma.categoria.upsert({
+          where: { nome: categoriaNome },
+          update: {},
+          create: {
+            nome: categoriaNome,
+            descricao: `Descrição para ${categoriaNome}`,
+          },
+        }),
+      ),
+    );
+
+    const livroAtualizado = await this.prisma.livro.update({
+      where: { id },
+      data: {
+        nome: updateLivroDto.nome,
+        estiloId: estilo.id,
+        Categorias: {
+          deleteMany: {},
+          create: categoriasCriadas.map(categoria => ({
+            categoriaId: categoria.id,
+          })),
+        },
+      },
+      include: {
+        Categorias: {
+          select: {
+            categoria: true,
+          },
+        },
+      },
+    });
+
+    return livroAtualizado;
   }
 
   remove(id: number) {

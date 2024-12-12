@@ -25,9 +25,9 @@ export class LivroController {
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
-  @Get()
-  findAll() {
-    return this.livroService.findAll();
+  @Get('/:ambienteId')
+  findAll(@Param('ambienteId') ambienteId: number) {
+    return this.livroService.findAll(ambienteId);
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
