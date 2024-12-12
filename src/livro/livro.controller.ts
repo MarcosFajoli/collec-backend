@@ -37,6 +37,15 @@ export class LivroController {
   }
 
   @UseGuards(AuthGuard, AmbienteGuard)
+  @Get('/categoria/:ambienteId/:categoriaId')
+  findByCategoria(
+    @Param('ambienteId') ambienteId: number,
+    @Param('categoriaId') categoriaId: number,
+  ) {
+    return this.livroService.findByCategoria(ambienteId, categoriaId);
+  }
+
+  @UseGuards(AuthGuard, AmbienteGuard)
   @Patch(':id')
   update(@Param('id') id: number, @Body() updateLivroDto: UpdateLivroDto) {
     return this.livroService.update(id, updateLivroDto);

@@ -7,23 +7,27 @@ import { LivroRepository } from './repositories/livro.repository';
 export class LivroService {
   constructor(private livroRepository: LivroRepository) {}
 
-  create(createLivroDto: CreateLivroDto) {
+  async create(createLivroDto: CreateLivroDto) {
     return this.livroRepository.create(createLivroDto);
   }
 
-  findAll(ambienteId: number) {
+  async findAll(ambienteId: number) {
     return this.livroRepository.findAll(ambienteId);
+  }
+
+  async findByCategoria(ambienteId: number, categoriaId: number) {
+    return this.livroRepository.findByCategoria(ambienteId, categoriaId);
   }
 
   async findOne(id: number) {
     return this.livroRepository.findOne(id);
   }
 
-  update(id: number, updateLivroDto: UpdateLivroDto) {
+  async update(id: number, updateLivroDto: UpdateLivroDto) {
     return this.livroRepository.update(id, updateLivroDto);
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return this.livroRepository.remove(id);
   }
 }

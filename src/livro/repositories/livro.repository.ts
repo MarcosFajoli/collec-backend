@@ -140,6 +140,29 @@ export class LivroRepository {
     return livroAtualizado;
   }
 
+  async findByCategoria(ambienteId: number, categoriaId: number) {
+    return this.prisma.livro.findMany({
+      where: {
+        ambienteId,
+        Categorias: {
+          some: {
+            categoria: {
+              id: categoriaId,
+            },
+          },
+        },
+      },
+      include: {
+        estilo: true,
+        Categorias: {
+          select: {
+            categoria: true,
+          },
+        },
+      },
+    });
+  }
+
   remove(id: number) {
     return this.prisma.livro.delete({
       where: {
