@@ -37,6 +37,7 @@ model Ambiente {
   contaId   Int
   userList  ListaContasAmbiente[]
   Livros    Livro[]
+  Colecao   Colecao[]
 
   @@map("ambiente")
 }
@@ -98,7 +99,9 @@ model LivroCategoria {
 model Colecao {
   id            Int             @id @default(autoincrement())
   nome          String
+  ambienteId    Int
   LivrosColecao LivrosColecao[]
+  ambiente      Ambiente        @relation(fields: [ambienteId], references: [id])
 
   @@map("colecao")
 }

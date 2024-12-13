@@ -5,9 +5,16 @@ import { ContaModule } from './conta/conta.module';
 import { AuthModule } from './auth/auth.module';
 import { AmbienteModule } from './ambiente/ambiente.module';
 import { LivroModule } from './livro/livro.module';
+import { ColecaoModule } from './colecao/colecao.module';
 
 @Module({
-  imports: [ContaModule, AuthModule, AmbienteModule, LivroModule],
+  imports: [
+    ContaModule,
+    AuthModule,
+    AmbienteModule,
+    LivroModule,
+    ColecaoModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
