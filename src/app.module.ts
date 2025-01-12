@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { AmbienteModule } from './ambiente/ambiente.module';
 import { LivroModule } from './livro/livro.module';
 import { ColecaoModule } from './colecao/colecao.module';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ColecaoModule } from './colecao/colecao.module';
     AmbienteModule,
     LivroModule,
     ColecaoModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

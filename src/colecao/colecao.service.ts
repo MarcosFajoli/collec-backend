@@ -10,6 +10,10 @@ export class ColecaoService {
     return this.colecaoRepository.create(createColecaoDto);
   }
 
+  addPhoto(id: number, filePath: string) {
+    return this.colecaoRepository.addPhoto(id, filePath);
+  }
+
   findAll(ambienteId: number) {
     return this.colecaoRepository.findAll(ambienteId);
   }

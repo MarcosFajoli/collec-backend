@@ -16,6 +16,13 @@ export class ColecaoRepository {
     });
   }
 
+  async addPhoto(colecaoId: number, filePath: string) {
+    return this.prisma.colecao.update({
+      where: { id: colecaoId },
+      data: { capa: filePath },
+    });
+  }
+
   async update(id: number, nome: string) {
     const colecao = await this.prisma.colecao.findUnique({
       where: { id },

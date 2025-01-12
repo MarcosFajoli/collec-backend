@@ -21,6 +21,10 @@ export class ContaService {
     });
   }
 
+  addPhoto(id: number, filePath: string) {
+    return this.contaRepository.addPhoto(id, filePath);
+  }
+
   findAll() {
     return this.contaRepository.findAll();
   }

@@ -7,16 +7,36 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { LivroService } from './livro.service';
 import { CreateLivroDto } from './dto/create-livro.dto';
 import { UpdateLivroDto } from './dto/update-livro.dto';
 import { AmbienteGuard } from 'src/ambiente/guards/ambiente.guard';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { UploadService } from 'src/upload/upload.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'src/upload/multer.config';
 
 @Controller('livro')
 export class LivroController {
-  constructor(private readonly livroService: LivroService) {}
+  constructor(
+    private readonly livroService: LivroService,
+    private readonly uploadService: UploadService,
+  ) {}
+
+  @UseGuards(AuthGuard, AmbienteGuard)
+  @Post('/:ambienteId/:id/capa')
+  @UseInterceptors(FileInterceptor('file', multerConfig))
+  async uploadCover(
+    @Param('id') id: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const filePath = await this.uploadService.uploadFile(file, 'livros');
+    const livro = await this.livroService.addPhoto(id, filePath);
+    return { message: 'Capa do livro atualizada com sucesso!', livro };
+  }
 
   @UseGuards(AuthGuard, AmbienteGuard)
   @Post()

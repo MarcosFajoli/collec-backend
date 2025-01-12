@@ -170,4 +170,11 @@ export class LivroRepository {
       },
     });
   }
+
+  addPhoto(id, filePath) {
+    return this.prisma.livro.update({
+      where: { id },
+      data: { capa: filePath },
+    });
+  }
 }

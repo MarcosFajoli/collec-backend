@@ -48,4 +48,11 @@ export class ContaRepository {
       },
     });
   }
+
+  addPhoto(id, filePath) {
+    return this.prisma.conta.update({
+      where: { id },
+      data: { fotoPerfil: filePath },
+    });
+  }
 }

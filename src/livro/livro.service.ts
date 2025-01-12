@@ -27,6 +27,10 @@ export class LivroService {
     return this.livroRepository.update(id, updateLivroDto);
   }
 
+  addPhoto(id: number, filePath: string) {
+    return this.livroRepository.addPhoto(id, filePath);
+  }
+
   async remove(id: number) {
     return this.livroRepository.remove(id);
   }

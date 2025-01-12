@@ -7,15 +7,35 @@ import {
   Param,
   Delete,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { ColecaoService } from './colecao.service';
 import { CreateColecaoDto } from './dto/create-colecao.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { AmbienteGuard } from 'src/ambiente/guards/ambiente.guard';
+import { UploadService } from 'src/upload/upload.service';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { multerConfig } from 'src/upload/multer.config';
 
 @Controller('colecao')
 export class ColecaoController {
-  constructor(private readonly colecaoService: ColecaoService) {}
+  constructor(
+    private readonly colecaoService: ColecaoService,
+    private readonly uploadService: UploadService,
+  ) {}
+
+  @UseGuards(AuthGuard, AmbienteGuard)
+  @Post('/:ambienteId/:colecaoId/capa')
+  @UseInterceptors(FileInterceptor('file', multerConfig))
+  async uploadCover(
+    @Param('colecaoId') colecaoId: number,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const filePath = await this.uploadService.uploadFile(file, 'colecoes');
+    const colecao = await this.colecaoService.addPhoto(colecaoId, filePath);
+    return { message: 'Capa da coleção atualizada com sucesso!', colecao };
+  }
 
   @UseGuards(AuthGuard, AmbienteGuard)
   @Post()
